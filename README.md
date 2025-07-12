@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Rick and Morty Character Browser 🧪
 
-## Getting Started
+A modern, responsive character browser built with Next.js and the Rick and Morty API. This application allows users to explore characters from the show, with features like pagination, debounced search, and filtering by status or species. The global state is managed efficiently using Redux Toolkit.
 
-First, run the development server:
+## ✨ Features
 
-```bash
+Character Grid View: Displays characters with their image, name, status, species, and origin.
+
+Responsive Design: A fluid layout that presents characters as cards on mobile and a grid on larger screens.
+
+Pagination: Easily navigate through the character pages using "Next" and "Previous" buttons.
+
+Debounced Search: Instantly search for characters by name with a debounced input to optimize API requests.
+
+Filtering: Refine your search by character status (Alive, Dead, Unknown) and species (Human, Alien, Robot, etc.).
+
+Redux State Management: Centralized state management for filters, character data, and pagination using Redux Toolkit.
+
+🛠️ Tech Stack
+Framework: Next.js (App Router)
+
+Language: TypeScript
+
+Styling: Tailwind CSS
+
+State Management: Redux Toolkit & React-Redux
+
+Data Fetching: Axios
+
+API: Rick and Morty API
+
+Debouncing: use-debounce
+
+Icons: React Icons
+
+Animations: Framer-motion
+
+🚀 Getting Started
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+Prerequisites
+You need to have Node.js (version 18.x or later) and npm installed on your machine.
+
+Installation
+Clone the repository:
+
+Bash
+
+git clone https://github.com/your-username/rick-and-morty-browser.git
+Navigate to the project directory:
+
+Bash
+
+cd rick-and-morty-browser
+Install the dependencies:
+
+Bash
+
+npm install
+Run the development server:
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application will be available at http://localhost:3000. The homepage serves as a portal to the character browser located at /characters.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📦 Main Dependencies Used
+next: The React framework for production.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+react, react-dom: Libraries for building the user interface.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+typescript: A typed superset of JavaScript.
 
-## Learn More
+@reduxjs/toolkit, react-redux: For global state management.
 
-To learn more about Next.js, take a look at the following resources:
+axios: For making HTTP requests to the Rick and Morty API.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+tailwindcss: A utility-first CSS framework for styling.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+use-debounce: For debouncing the search input.
 
-## Deploy on Vercel
+react-icons: For SVG icons.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+framer-motion: For animations.
