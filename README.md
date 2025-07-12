@@ -46,7 +46,7 @@ Clone the repository:
 
 Bash
 
-git clone https://github.com/your-username/rick-and-morty-browser.git
+git clone https://github.com/Nox008/rick-and-morty.git
 Navigate to the project directory:
 
 Bash
