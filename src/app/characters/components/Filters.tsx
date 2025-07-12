@@ -35,7 +35,6 @@ const Filters = () => {
     onChange: (value: string) => void;
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
-    placeholder: string;
   }) => {
     const selectedOption = options.find(opt => opt.value === value) || options[0];
 
@@ -94,7 +93,6 @@ const Filters = () => {
         onChange={(value) => dispatch(setStatusFilter(value))}
         isOpen={statusOpen}
         setIsOpen={setStatusOpen}
-        placeholder="Filter by Status"
       />
 
       {/* Species Filter */}
@@ -104,7 +102,6 @@ const Filters = () => {
         onChange={(value) => dispatch(setSpeciesFilter(value))}
         isOpen={speciesOpen}
         setIsOpen={setSpeciesOpen}
-        placeholder="Filter by Species"
       />
 
       {/* Clear Filters Button */}
