@@ -29,7 +29,6 @@ const Filters = () => {
     onChange, 
     isOpen, 
     setIsOpen, 
-    placeholder 
   }: {
     value: string;
     options: Array<{ value: string; label: string; emoji: string }>;
