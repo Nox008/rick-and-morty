@@ -89,13 +89,11 @@ const CharactersPage = () => {
             <motion.div 
               className="flex flex-col lg:flex-row gap-4 items-center justify-between"
               animate={{
-                opacity: 1 - scrollProgress,
-                y: scrollProgress * -20,
-                height: isScrolled ? '0' : 'auto',
-                marginBottom: isScrolled ? '0' : '1rem',
-                overflow: 'hidden'
+                opacity: isScrolled ? 0 : 1,
+                height: isScrolled ? 0 : 'auto'
               }}
               transition={{ type: 'spring', damping: 20 }}
+              style={{ overflow: isScrolled ? 'hidden' : 'visible' }}
             >
               <div className="w-full lg:w-auto lg:flex-1 max-w-md">
                 <SearchBar />
