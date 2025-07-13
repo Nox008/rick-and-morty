@@ -16,6 +16,7 @@ const CharactersPage = () => {
   const filters = useSelector((state: RootState) => state.filters);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     dispatch(getCharacters({ page, ...filters }));
@@ -24,14 +25,15 @@ const CharactersPage = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 100);
+      const progress = Math.min(scrollTop / 100, 1);
+      setScrollProgress(progress);
+      setIsScrolled(scrollTop > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (isMenuOpen && !(event.target as Element).closest('.menu-container')) {
@@ -43,7 +45,6 @@ const CharactersPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMenuOpen]);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -61,52 +62,63 @@ const CharactersPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Google Fonts Link */}
       <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
       
-      {/* Background Pattern */}
-      {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50"></div> */}
-      
       <div className="relative z-10">
-        {/* Header */}
+        {/* Header with smooth transitions */}
         <div className="bg-black/20 backdrop-blur-sm border-b border-white/10 sticky top-0 z-20 transition-all duration-300">
           <div className="container mx-auto px-4 py-6">
-            {/* Main Title - Hidden when scrolled */}
-            <div className={`text-center transition-all duration-500 ease-in-out ${
-              isScrolled 
-                ? 'mb-0 opacity-0 -translate-y-4 h-0 overflow-hidden' 
-                : 'mb-8 opacity-100 translate-y-0'
-            }`}>
+            <motion.div 
+              className="text-center"
+              animate={{
+                opacity: 1 - scrollProgress,
+                scale: 1 - (scrollProgress * 0.1),
+                y: scrollProgress * -40,
+                marginBottom: isScrolled ? '0' : '2rem',
+                height: isScrolled ? '0' : 'auto',
+                overflow: 'hidden'
+              }}
+              transition={{ type: 'spring', damping: 20 }}
+            >
               <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-2" style={{ fontFamily: 'Creepster, cursive' }}>
                 Rick & Morty
               </h1>
               <p className="text-slate-300 text-lg">Character Explorer</p>
-            </div>
+            </motion.div>
             
-            {/* Search and Filters - Hidden when scrolled */}
-            <div className={`flex flex-col lg:flex-row gap-4 items-center justify-between transition-all duration-500 ease-in-out ${
-              isScrolled 
-                ? 'opacity-0 -translate-y-4 h-0 overflow-hidden' 
-                : 'opacity-100 translate-y-0'
-            }`}>
+            <motion.div 
+              className="flex flex-col lg:flex-row gap-4 items-center justify-between"
+              animate={{
+                opacity: 1 - scrollProgress,
+                y: scrollProgress * -20,
+                height: isScrolled ? '0' : 'auto',
+                marginBottom: isScrolled ? '0' : '1rem',
+                overflow: 'hidden'
+              }}
+              transition={{ type: 'spring', damping: 20 }}
+            >
               <div className="w-full lg:w-auto lg:flex-1 max-w-md">
                 <SearchBar />
               </div>
               <div className="w-full lg:w-auto">
                 <Filters />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Hamburger Menu Button - Only shown when scrolled */}
+        {/* Hamburger Menu Button */}
         <AnimatePresence>
           {isScrolled && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, scale: 0.8, y: -20 }}
+              animate={{ 
+                opacity: scrollProgress,
+                scale: 1,
+                y: 0
+              }}
+              exit={{ opacity: 0, scale: 0.8, y: -20 }}
+              transition={{ type: 'spring', damping: 20 }}
               className="fixed top-4 right-4 z-50 menu-container"
             >
               <motion.button
@@ -171,7 +183,6 @@ const CharactersPage = () => {
               className="fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-lg border-l border-white/10 z-50 menu-container"
             >
               <div className="p-6 h-full flex flex-col">
-                {/* Menu Header */}
                 <div className="mb-8">
                   <motion.h2
                     initial={{ opacity: 0, y: -20 }}
@@ -192,7 +203,6 @@ const CharactersPage = () => {
                   </motion.p>
                 </div>
 
-                {/* Menu Content */}
                 <div className="flex-1 space-y-6">
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
@@ -217,7 +227,6 @@ const CharactersPage = () => {
                   </motion.div>
                 </div>
 
-                {/* Menu Footer */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -255,21 +264,18 @@ const CharactersPage = () => {
           
           {status === 'succeeded' && (
             <>
-              {/* Results Info */}
               <div className="mb-6">
                 <p className="text-slate-400 text-sm">
                   {/* Found {characters.length} characters */}
                 </p>
               </div>
               
-              {/* Character Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-12">
                 {characters.map((character) => (
                   <CharacterCard key={character.id} character={character} />
                 ))}
               </div>
               
-              {/* Pagination */}
               <div className="flex justify-center">
                 <Pagination />
               </div>
